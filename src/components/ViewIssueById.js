@@ -13,9 +13,9 @@ class ViewIssueById extends Component {
            
         }
     }
-
+    
     componentDidMount(){
-        IssueService.getIssueById(this.state.issueId).then( res => {
+        IssueService.getIssueById(this.props.location.state.issue.issueId).then( res => {
             console.log(this.state);
             this.setState({issue: res.data});
            

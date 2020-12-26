@@ -11,12 +11,12 @@ class StaffWelcome extends Component {
     render() {
         return (
             <div>
-            <div className="jumbotron">
-                <h1>Welcome Staff!!</h1>
-                <button className="btn btn-info" onClick={this.display.bind(this)}>View Issues</button>
-                <button className="btn btn-info" onClick={this.add.bind(this)} style={{marginLeft: "10px"}}>Create Issues</button>
-              </div>                      
-            </div>
+            <div className="jumbotron"><h1>Welcome Staff!!</h1></div>
+                
+                <button className="btn btn-info" onClick={this.display.bind(this)} style={{marginBottom: "10px"}}>View Issues</button><br/>
+                <button className="btn btn-info" onClick={this.add.bind(this)} style={{marginBottom: "10px"}}>CreateIssue</button>
+            </div>                      
+        
         )
     }
 }

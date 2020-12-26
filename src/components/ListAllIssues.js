@@ -19,17 +19,34 @@ class ListAllIssues extends Component {
     
     }
     
-    editIssue(issue){
-        this.props.history.push({
-            pathname:`/issues/updateissue/${issue.issueId}`,
-            state:{
-                issue:issue
-            }
-        });
+    editIssue(issues){
+        this.state.issues.map(issue=>
+            this.props.history.push({
+                pathname:`/issues/updateissue/${issue.issueId}`,
+                state:{
+                    issue:issue
+                }
+            })
+
+        )
+        
     }
-    viewIssue(issueId){
+    
+    viewIssue(issues){
+        this.state.issues.map(issue=>
+            this.props.history.push({
+                pathname:`/issues/${issue.issueId}`,
+                state:{
+                    issue:issue
+                }
+            })
+
+        )
+        
+    }
+    /* viewIssue(issueId){
         this.props.history.push(`/issues/${issueId}`);
-    }
+    } */
     logout(){
         this.props.history.push('/');
     }
@@ -40,19 +57,60 @@ class ListAllIssues extends Component {
             this.setState({ issues : res.data});
         });
     }
+     update=()=>{
+        return  <button onClick={ () => this.editIssue(this.state.issues)} className="btn btn-info">Update </button>
+            }
+     view=()=>{
+         return  <button onClick={ () => this.viewIssue(this.state.issues)} className="btn btn-info">View </button> 
+
+     }
+    
    
     
     render() {
+        const columns = [
+            { dataField: 'issueId', text: 'Issue Id', sort: true },
+            { dataField: 'issueDescription', text: 'Issue Description', sort: true },
+            { dataField: 'issueStatus', text: 'Issue Status', sort: true },
+            { dataField: 'userId.userId', text: 'Customer Id', sort: true },
+            { formatter: this.update},
+            { formatter: this.view}
+            
+          ];
+          
+        
+          const defaultSorted = [{
+            dataField: 'issueId',
+            order: 'asc'
+          }];
     
+       const pagination = paginationFactory({
+        page: 2,
+        sizePerPage: 5,
+        lastPageText: '>>',
+        firstPageText: '<<',
+        nextPageText: '>',
+        prePageText: '<',
+        showTotal: true,
+        alwaysShowAllBtns: true,
+        onPageChange: function (page, sizePerPage) {
+          console.log('page', page);
+          console.log('sizePerPage', sizePerPage);
+        },
+        onSizePerPageChange: function (page, sizePerPage) {
+          console.log('page', page);
+          console.log('sizePerPage', sizePerPage);
+        }
+      });
         
         
         return (
             <div>
                  <div ><h2 className="text-center" >Issue List</h2></div>
-                  <div className = "row">
+                 <BootstrapTable bootstrap4 keyField='issueId' data={this.state.issues} columns={columns} defaultSorted={defaultSorted} pagination={pagination} />
+                 {/* <div className = "row">
                         <table   className = "table table-striped table-bordered" >
-
-                            <thead>
+                           <thead>
                                 <tr>
                                     <th > Issue Id</th>
                                     <th > Issue Description</th>
@@ -70,7 +128,7 @@ class ListAllIssues extends Component {
                                              <td> {issue.issueDescription}</td>   
                                              <td> { issue.issueStatus}</td>
                                              <td></td>
-                                             {/* <td align="center"> { issue.userId.userId}</td>  */}  
+                                             {/* <td align="center"> { issue.userId.userId}</td>  
                                              <td>
                                                  <button onClick={ () => this.editIssue(issue)} className="btn btn-info">Update </button>
                                                  
@@ -81,9 +139,9 @@ class ListAllIssues extends Component {
                                     )
                                 }
                             </tbody>
-                        </table> 
+                        </table> </div> */}
                        <button  className="btn btn-success"  style={{marginLeft: "500px"}}onClick={this.logout.bind(this)} >Logout</button>
-                            </div>
+                            
 
             </div>
         )

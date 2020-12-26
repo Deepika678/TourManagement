@@ -16,7 +16,7 @@ class IssueService {
     }
     
     createIssue(issue){
-        return axios.post(ISSUE_API_BASE_URL + '/createissue' ,issue)
+        return axios.post(ISSUE_API_BASE_URL + '/createissue' ,issue);
     }
     
 }
