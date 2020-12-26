@@ -17,7 +17,7 @@ function App() {
              <HeaderComponent/> 
               <div className="container">
                   <Switch> 
-                         <Route path = "/" exact component = {StaffWelcome}></Route>
+                         <Route path = "/welcomestaff" exact component = {StaffWelcome}></Route>
                          <Route path = "/issues/allissue" exact component = {ListAllIssues}></Route>
                          <Route path = "/issues/createissue" exact component = {AddIssue}></Route>
                          <Route path = "/issues/updateissue/:issueId" exact component = {UpdateIssues}></Route> 

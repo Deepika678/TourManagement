@@ -13,7 +13,7 @@ class AddIssue extends Component {
            
           
         }
-        this.saveIssue=this.saveIssue.bind(this)
+        /* this.saveIssue=this.saveIssue.bind(this) */
       
  
 
@@ -35,7 +35,7 @@ class AddIssue extends Component {
         let issue = {issueDescription: this.state.issueDescription, issueStatus: this.state.issueStatus ,userId:{userId:this.state.userId }};
         console.log('issue => ' + JSON.stringify(issue));
         IssueService.createIssue(issue).then( res => {
-            console.log(res)
+            console.log(res);
             window.alert("Issue is added Successfully with issueID " + res.data.issueId);
          } );
     
@@ -43,7 +43,7 @@ class AddIssue extends Component {
 
     
     cancel(){
-        this.props.history.push('/');
+        this.props.history.push('/welcomestaff');
     }
    
 

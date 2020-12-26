@@ -16,6 +16,7 @@ class ListAllIssues extends Component {
         
         
      this.editIssue = this.editIssue.bind(this);
+     this.viewIssue = this.viewIssue.bind(this);
     
     }
     
@@ -30,7 +31,18 @@ class ListAllIssues extends Component {
 
         )
         
-    }
+    }  
+    
+    /* editIssue(issue){
+        this.props.history.push({
+                pathname:`/issues/updateissue/${issue.issueId}`,
+                state:{
+                    issue:issue
+                }
+            })
+
+    } */
+    
     
     viewIssue(issues){
         this.state.issues.map(issue=>
@@ -44,11 +56,9 @@ class ListAllIssues extends Component {
         )
         
     }
-    /* viewIssue(issueId){
-        this.props.history.push(`/issues/${issueId}`);
-    } */
+    
     logout(){
-        this.props.history.push('/');
+        this.props.history.push('/welcomestaff');
     }
     
 
@@ -59,7 +69,7 @@ class ListAllIssues extends Component {
     }
      update=()=>{
         return  <button onClick={ () => this.editIssue(this.state.issues)} className="btn btn-info">Update </button>
-            }
+        }
      view=()=>{
          return  <button onClick={ () => this.viewIssue(this.state.issues)} className="btn btn-info">View </button> 
 
@@ -85,7 +95,7 @@ class ListAllIssues extends Component {
           }];
     
        const pagination = paginationFactory({
-        page: 2,
+        page: 1,
         sizePerPage: 5,
         lastPageText: '>>',
         firstPageText: '<<',
@@ -107,8 +117,8 @@ class ListAllIssues extends Component {
         return (
             <div>
                  <div ><h2 className="text-center" >Issue List</h2></div>
-                 <BootstrapTable bootstrap4 keyField='issueId' data={this.state.issues} columns={columns} defaultSorted={defaultSorted} pagination={pagination} />
-                 {/* <div className = "row">
+                <BootstrapTable bootstrap4 keyField='issueId' data={this.state.issues} columns={columns} defaultSorted={defaultSorted} pagination={pagination} /> 
+                {/* <div className = "row">
                         <table   className = "table table-striped table-bordered" >
                            <thead>
                                 <tr>

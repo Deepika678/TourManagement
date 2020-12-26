@@ -7,7 +7,7 @@ class ViewIssueById extends Component {
 
         this.state = {
             issueId: this.props.match.params.issueId,
-            issue: {},
+            issue: {}
             
            
            

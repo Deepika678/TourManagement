@@ -17,6 +17,7 @@ class UpdateIssues extends Component {
         
         IssueService.updateIssue(this.props.location.state.issue).then( res => {
             this.props.history.push('/issues/allissue');
+          //  window.location.reload()
            });
     
     }
