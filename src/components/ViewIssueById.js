@@ -45,7 +45,7 @@ class ViewIssueById extends Component {
                             <div> { this.state.issue.issueId}</div>
                         </div>
                         <div className = "row">
-                            <label> IssueDescription </label>
+                            <label> IssueDescription: </label>
                             <div> { this.state.issue.issueDescription}</div>
                         </div>
                         <div className = "row">

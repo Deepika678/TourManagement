@@ -9,8 +9,9 @@ class CustomerWelcome extends Component {
             <div>
                 <div className="jumbotron">
                 <h1>Welcome Customer!!</h1>
-                <button className="btn btn-info" onClick={this.add.bind(this)}>Create Issues</button>
-              </div>                      
+                </div>
+                <button className="btn btn-info" onClick={this.add.bind(this)}>Add Issue</button>
+                                    
             </div>
                 
         

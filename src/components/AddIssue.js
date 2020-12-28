@@ -43,7 +43,7 @@ class AddIssue extends Component {
 
     
     cancel(){
-        this.props.history.push('/welcomestaff');
+        this.props.history.push('/welcomecustomer');
     }
    
 

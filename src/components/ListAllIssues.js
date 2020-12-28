@@ -5,6 +5,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import BootstrapTable from 'react-bootstrap-table-next';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';  
 
 class ListAllIssues extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class ListAllIssues extends Component {
 
         this.state = {
                 issues : []
+                
         }
         
         
@@ -20,7 +22,7 @@ class ListAllIssues extends Component {
     
     }
     
-    editIssue(issues){
+   editIssue(issues){
         this.state.issues.map(issue=>
             this.props.history.push({
                 pathname:`/issues/updateissue/${issue.issueId}`,
@@ -31,9 +33,9 @@ class ListAllIssues extends Component {
 
         )
         
-    }  
-    
-    /* editIssue(issue){
+    } 
+    /* 
+     editIssue(issue){
         this.props.history.push({
                 pathname:`/issues/updateissue/${issue.issueId}`,
                 state:{
@@ -41,7 +43,7 @@ class ListAllIssues extends Component {
                 }
             })
 
-    } */
+    }    */
     
     
     viewIssue(issues){
@@ -67,9 +69,12 @@ class ListAllIssues extends Component {
             this.setState({ issues : res.data});
         });
     }
-     update=()=>{
-        return  <button onClick={ () => this.editIssue(this.state.issues)} className="btn btn-info">Update </button>
-        }
+      update=()=>{
+        return(
+          <button onClick={ () => this.editIssue(this.state.issues)} className="btn btn-info">Update </button> 
+        )
+        } 
+        
      view=()=>{
          return  <button onClick={ () => this.viewIssue(this.state.issues)} className="btn btn-info">View </button> 
 
@@ -78,17 +83,17 @@ class ListAllIssues extends Component {
    
     
     render() {
-        const columns = [
-            { dataField: 'issueId', text: 'Issue Id', sort: true },
+       
+         const columns = [
+            { dataField: 'issueId', text: 'Issue Id', sort: true ,filter: textFilter()  },
             { dataField: 'issueDescription', text: 'Issue Description', sort: true },
             { dataField: 'issueStatus', text: 'Issue Status', sort: true },
             { dataField: 'userId.userId', text: 'Customer Id', sort: true },
-            { formatter: this.update},
+            { formatter:this.update},
             { formatter: this.view}
             
           ];
           
-        
           const defaultSorted = [{
             dataField: 'issueId',
             order: 'asc'
@@ -112,12 +117,13 @@ class ListAllIssues extends Component {
           console.log('sizePerPage', sizePerPage);
         }
       });
-        
+    
         
         return (
             <div>
                  <div ><h2 className="text-center" >Issue List</h2></div>
-                <BootstrapTable bootstrap4 keyField='issueId' data={this.state.issues} columns={columns} defaultSorted={defaultSorted} pagination={pagination} /> 
+                           
+              <BootstrapTable  bootstrap4 striped bordered hover  keyField='issueId' data={this.state.issues} columns={columns} defaultSorted={defaultSorted} pagination={pagination}  filter={ filterFactory()}/>  
                 {/* <div className = "row">
                         <table   className = "table table-striped table-bordered" >
                            <thead>
@@ -137,8 +143,7 @@ class ListAllIssues extends Component {
                                              <td align="center"> { issue.issueId} </td>
                                              <td> {issue.issueDescription}</td>   
                                              <td> { issue.issueStatus}</td>
-                                             <td></td>
-                                             {/* <td align="center"> { issue.userId.userId}</td>  
+                                             <td align="center"> { issue.userId.userId}</td>  
                                              <td>
                                                  <button onClick={ () => this.editIssue(issue)} className="btn btn-info">Update </button>
                                                  

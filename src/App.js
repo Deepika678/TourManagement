@@ -7,6 +7,7 @@ import ViewIssueById from './components/ViewIssueById';
 import HeaderComponent from './components/HeaderComponent';
 import StaffWelcome from './components/StaffWelcome';
 import AddIssue from './components/AddIssue';
+import CustomerWelcome from './components/CustomerWelcome';
 
 
 
@@ -18,6 +19,7 @@ function App() {
               <div className="container">
                   <Switch> 
                          <Route path = "/welcomestaff" exact component = {StaffWelcome}></Route>
+                         <Route path = "/welcomecustomer" exact component = {CustomerWelcome}></Route>
                          <Route path = "/issues/allissue" exact component = {ListAllIssues}></Route>
                          <Route path = "/issues/createissue" exact component = {AddIssue}></Route>
                          <Route path = "/issues/updateissue/:issueId" exact component = {UpdateIssues}></Route> 
