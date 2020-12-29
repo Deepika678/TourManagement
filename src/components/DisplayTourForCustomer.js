@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TourPackageService from '../services/TourPackageService'
-class DisplayAllTour extends Component {
+class DisplayTourForCustomer extends Component {
     constructor(props) {
         super(props)
 
@@ -8,40 +8,13 @@ class DisplayAllTour extends Component {
                 tours : []
                 
         }
-        
-        
-     this.edittour = this.edittour.bind(this);
-    /* this.deletetour = this.deletetour.bind(this); */
+    
     
     }
-    
- 
-     
-     edittour(tour){
-         console.log(tour.packageId)
-        this.props.history.push({
-                pathname:`/tour/update/${tour.packageId}`,
-                state:{
-                    packageId:tour.packageId
-                }
-            })
 
-    }   
-    deletetour(id){
-       this.props.history.push({
-               pathname:`/tour/delete/${id}`,
-               state:{
-                   packageId:id
-               }
-           })
 
-   }    
-    
-    
-    
-    
     logout(){
-        this.props.history.push('/welcomestaff');
+        this.props.history.push('/welcomecustomer');
     }
     
 
@@ -66,15 +39,13 @@ class DisplayAllTour extends Component {
                                         <div className="card bg-light">
                                             <div className="card-body text-center">
                                                 <h4 class="card-title">{tour.packageName}</h4>
-                                                <img className="card-img-top" src={tour.tourImage} alt="Card image"></img>
                                                 <p className="card-text">{tour.description}</p>
                                                 <p className="card-text">DaysCount : {tour.daysCount}</p>
                                                 <p className="card-text">NightCount : {tour.nightsCount}</p>
                                                 <p className="card-text">PackageType : {tour.packageType}</p>
                                                 <p className="card-text">HotelName : {tour.hotelName}</p>
                                                 <p className="card-text">TripPrice : {tour.tripPrice}</p>
-                                                <button onClick={() => this.edittour(tour)} className="btn btn-info">Update </button>
-                                                <button style={{ marginLeft: "10px" }} onClick={() => this.deletetour(tour.packageId)} className="btn btn-danger">Delete </button>
+                            
                                                 
                                             </div>
                                         </div>
@@ -91,4 +62,4 @@ class DisplayAllTour extends Component {
     }
 }
 
-export default DisplayAllTour
+export default DisplayTourForCustomer

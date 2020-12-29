@@ -16,8 +16,8 @@ class UpdateIssues extends Component {
         console.log('issue => ' + JSON.stringify(this.props.location.state.issue));
         
         IssueService.updateIssue(this.props.location.state.issue).then( res => {
+            window.alert("Updated Successfully");
             this.props.history.push('/issues/allissue');
-          //  window.location.reload()
            });
     
     }

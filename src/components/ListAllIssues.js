@@ -5,36 +5,65 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import BootstrapTable from 'react-bootstrap-table-next';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';  
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'; 
+import ReactPaginate from 'react-paginate' 
 
 class ListAllIssues extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-                issues : []
+            offset:0,
+            issues : [],
+            orgData:[],
+            perPage:5,
+            currentPage:0
                 
         }
-        
-        
      this.editIssue = this.editIssue.bind(this);
      this.viewIssue = this.viewIssue.bind(this);
-    
+     this.clickPageHandler=this.clickPageHandler.bind(this) 
     }
     
-   editIssue(issues){
-        this.state.issues.map(issue=>
-            this.props.history.push({
-                pathname:`/issues/updateissue/${issue.issueId}`,
-                state:{
-                    issue:issue
-                }
-            })
+    clickPageHandler=(e)=>
+    {
+        const selectedPage=e.selected;
+        const offset=selectedPage*this.state.perPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset:offset
+        },()=>
+        {
+            this.loadMoreData();
+        })
+    }
 
-        )
-        
-    } 
-    /* 
+    loadMoreData=()=>
+    {
+        const data=this.state.orgData
+        const slice=data.slice(this.state.offset, this.state.offset+this.state.perPage)
+                this.setState(
+                    {
+                        pageCount:Math.ceil(data.length/this.state.perPage),
+                        issues: slice
+                    })
+
+    }
+
+    componentDidMount()
+    {IssueService.getIssues().then((response) => {
+       const data = response.data;
+       const slice=data.slice(this.state.offset, this.state.offset+this.state.perPage)
+        this.setState({
+            pageCount:Math.ceil(data.length/this.state.perPage),
+            orgData:response.data,
+            issues: slice
+        });
+    });
+    }
+  
+     
+     
      editIssue(issue){
         this.props.history.push({
                 pathname:`/issues/updateissue/${issue.issueId}`,
@@ -43,19 +72,16 @@ class ListAllIssues extends Component {
                 }
             })
 
-    }    */
+    }   
     
     
-    viewIssue(issues){
-        this.state.issues.map(issue=>
+    viewIssue(issueId){
             this.props.history.push({
-                pathname:`/issues/${issue.issueId}`,
+                pathname:`/issues/${issueId}`,
                 state:{
-                    issue:issue
+                    issueId:issueId
                 }
             })
-
-        )
         
     }
     
@@ -63,80 +89,33 @@ class ListAllIssues extends Component {
         this.props.history.push('/welcomestaff');
     }
     
-
-    componentDidMount(){
-        IssueService.getIssues().then((res) => {
-            this.setState({ issues : res.data});
-        });
-    }
-      update=()=>{
-        return(
-          <button onClick={ () => this.editIssue(this.state.issues)} className="btn btn-info">Update </button> 
-        )
-        } 
-        
-     view=()=>{
-         return  <button onClick={ () => this.viewIssue(this.state.issues)} className="btn btn-info">View </button> 
-
-     }
+     
     
    
     
     render() {
-       
-         const columns = [
-            { dataField: 'issueId', text: 'Issue Id', sort: true ,filter: textFilter()  },
-            { dataField: 'issueDescription', text: 'Issue Description', sort: true },
-            { dataField: 'issueStatus', text: 'Issue Status', sort: true },
-            { dataField: 'userId.userId', text: 'Customer Id', sort: true },
-            { formatter:this.update},
-            { formatter: this.view}
-            
-          ];
-          
-          const defaultSorted = [{
-            dataField: 'issueId',
-            order: 'asc'
-          }];
-    
-       const pagination = paginationFactory({
-        page: 1,
-        sizePerPage: 5,
-        lastPageText: '>>',
-        firstPageText: '<<',
-        nextPageText: '>',
-        prePageText: '<',
-        showTotal: true,
-        alwaysShowAllBtns: true,
-        onPageChange: function (page, sizePerPage) {
-          console.log('page', page);
-          console.log('sizePerPage', sizePerPage);
-        },
-        onSizePerPageChange: function (page, sizePerPage) {
-          console.log('page', page);
-          console.log('sizePerPage', sizePerPage);
-        }
-      });
-    
-        
-        return (
-            <div>
-                 <div ><h2 className="text-center" >Issue List</h2></div>
-                           
-              <BootstrapTable  bootstrap4 striped bordered hover  keyField='issueId' data={this.state.issues} columns={columns} defaultSorted={defaultSorted} pagination={pagination}  filter={ filterFactory()}/>  
-                {/* <div className = "row">
-                        <table   className = "table table-striped table-bordered" >
-                           <thead>
-                                <tr>
-                                    <th > Issue Id</th>
-                                    <th > Issue Description</th>
-                                    <th > Issue Status</th>
-                                    <th > Customer Id</th>  
-                                    <th > Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
+        return(
+        <div>
+            <h2 className="text-center">Issues List</h2>
+            <div className="row">
+            </div>
+            <div className="container"><ReactPaginate previousLabel={"prev"} nextLabel={"next"} breakLabel={"..."} breakClassName={"break me"}
+                pageCount={this.state.pageCount} marginPagesDisplayed={2} pageRangeDisplayed={10} onPageChange={this.clickPageHandler}
+                containerClassName={"pagination"} subContainerClassName={"pages pagination"} activeClassName={"active"}></ReactPaginate>
+                    </div>
+                    <div className="container">
+                <table className="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th > Issue Id</th>
+                        <th > Issue Description</th>
+                        <th > Issue Status</th>
+                        <th > Customer Id</th>  
+                        <th > Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
                                     this.state.issues.map(
                                         issue => 
                                         <tr key = {issue.issueId}>
@@ -153,13 +132,28 @@ class ListAllIssues extends Component {
                                         </tr>
                                     )
                                 }
-                            </tbody>
-                        </table> </div> */}
-                       <button  className="btn btn-success"  style={{marginLeft: "500px"}}onClick={this.logout.bind(this)} >Logout</button>
+                    </tbody>
+
+                </table>
+                </div>
+            
+       
+       <button  className="btn btn-success"  style={{marginLeft: "500px"}}onClick={this.logout.bind(this)} >Logout</button>
+          </div>     
+        )
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
                             
 
-            </div>
-        )
+        
     }
 }
 

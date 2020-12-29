@@ -12,6 +12,7 @@ import CreateTour from './components/CreateTour';
 import DisplayAllTour from './components/DisplayAllTour';
 import UpdateTourPackage from './components/UpdateTourPackage';
 import DeleteTourPackage from './components/DeleteTourPackage';
+import DisplayTourForCustomer from './components/DisplayTourForCustomer';
 
 
 
@@ -26,6 +27,7 @@ function App() {
                          <Route path = "/welcomecustomer" exact component = {CustomerWelcome}></Route>
                          <Route path = "/issues/allissue" exact component = {ListAllIssues}></Route>
                          <Route path = "/tour/all" exact component = {DisplayAllTour}></Route>
+                         <Route path = "/tour/alltour" exact component = {DisplayTourForCustomer}></Route>
                          <Route path = "/tour/update/:packageId" exact component = {UpdateTourPackage}></Route>
                          <Route path = "/tour/delete/:packageId" exact component = {DeleteTourPackage}></Route>
                          <Route path = "/tour/createnewpackage" exact component = {CreateTour}></Route>

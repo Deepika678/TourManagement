@@ -7,6 +7,7 @@ class TourPackageService {
     getTour(){
         return axios.get(TOURPACKAGE_API_BASE_URL + '/all');
     }
+   
     
     createTour(tour){
         return axios.post(TOURPACKAGE_API_BASE_URL + '/createnewpackage' ,tour);
